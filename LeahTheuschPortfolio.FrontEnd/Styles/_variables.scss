@@ -1,0 +1,21 @@
+// Brand color library 
+$primary: #D2437A; 
+$secondary: #224653;
+$black: #000; 
+$white: #fff;
+$parchment: #EFE9DC;
+$off-white: #F9F8F4;
+$silver: #D5DCDF;
+$green: #40654A; 
+$yellow: #E4C259;
+$light-orange: #ED9F77;
+$dark-orange: #C45524;
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px
+);

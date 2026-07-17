@@ -1,0 +1,75 @@
+@use 'sass:map';
+@use 'functions' as fn;
+@use 'bootstrap' as bs;
+
+// Brand typography 
+$font-heading: 'Grandstander', sans-serif;
+$font-script: 'Yellowtail', cursive; 
+$font-body: 'Karla', sans-serif; 
+
+$fw-semibold: 600;
+$fw-bold: 700;
+$fw-extrabold: 800;
+
+// Text-style token map
+$text-styles: (
+  'nav-logo':           (family: $font-heading, size: (mobile: fn.rem(19), desktop: fn.rem(24)),   weight: $fw-extrabold, line-height: 1,    letter-spacing: 2px),
+  'nav-link':           (family: $font-heading, size: (mobile: fn.rem(14), desktop: fn.rem(14)),   weight: $fw-semibold,  line-height: 1,    letter-spacing: 1.5px),
+  'mobile-menu-link':   (family: $font-heading, size: (mobile: fn.rem(22), desktop: fn.rem(22)),   weight: $fw-bold,      line-height: 1.2,  letter-spacing: normal),
+  'sign-off':           (family: $font-script,  size: (mobile: fn.rem(20), desktop: fn.rem(20)),   weight: 400,           line-height: 1,    letter-spacing: normal),
+
+  'hero-heading':       (family: $font-heading, size: (mobile: fn.rem(34), desktop: fn.rem(52)),   weight: $fw-extrabold, line-height: 1.12, letter-spacing: normal),
+  'hero-body':          (family: $font-body,    size: (mobile: fn.rem(16), desktop: fn.rem(18)),   weight: 400,           line-height: 1.65, letter-spacing: normal),
+
+  'marquee-text':       (family: $font-heading, size: (mobile: fn.rem(14), desktop: fn.rem(16)),   weight: $fw-bold,      line-height: 1,    letter-spacing: 2px),
+
+  'eyebrow':            (family: $font-heading, size: (mobile: fn.rem(13), desktop: fn.rem(15)),   weight: $fw-bold,      line-height: 1,    letter-spacing: 3px),
+  'about-body':         (family: $font-body,    size: (mobile: fn.rem(16), desktop: fn.rem(20)),   weight: 400,           line-height: 1.75, letter-spacing: normal),
+
+  'pods-heading':       (family: $font-heading, size: (mobile: fn.rem(28), desktop: fn.rem(36)),   weight: $fw-extrabold, line-height: 1.2,  letter-spacing: normal),
+  'pods-card-heading':  (family: $font-heading, size: (mobile: fn.rem(20), desktop: fn.rem(22)),   weight: $fw-bold,      line-height: 1.2,  letter-spacing: normal),
+  'pods-body':          (family: $font-body,    size: (mobile: fn.rem(15), desktop: fn.rem(15.5)), weight: 400,           line-height: 1.55, letter-spacing: normal),
+
+  'quick-links-heading':(family: $font-heading, size: (mobile: fn.rem(32), desktop: fn.rem(32)),   weight: $fw-extrabold, line-height: 1.2,  letter-spacing: normal),
+  'quick-links-row':    (family: $font-heading, size: (mobile: fn.rem(18), desktop: fn.rem(20)),   weight: $fw-bold,      line-height: 1.2,  letter-spacing: normal),
+  'contact-title':      (family: $font-heading, size: (mobile: fn.rem(28), desktop: fn.rem(28)),   weight: $fw-extrabold, line-height: 1.2,  letter-spacing: normal),
+  'contact-input':      (family: $font-body,    size: (mobile: fn.rem(15), desktop: fn.rem(15)),   weight: 400,           line-height: 1.4,  letter-spacing: normal),
+  'pill-label':         (family: $font-heading, size: (mobile: fn.rem(14), desktop: fn.rem(14)),   weight: $fw-bold,      line-height: 1,    letter-spacing: 2px),
+
+  'footer-logo':        (family: $font-heading, size: (mobile: fn.rem(22), desktop: fn.rem(22)),   weight: $fw-extrabold, line-height: 1,    letter-spacing: normal),
+  'footer-tagline':     (family: $font-body,    size: (mobile: fn.rem(15), desktop: fn.rem(15)),   weight: 400,           line-height: 1.5,  letter-spacing: normal),
+  'footer-nav-link':    (family: $font-heading, size: (mobile: fn.rem(14), desktop: fn.rem(14)),   weight: $fw-semibold,  line-height: 1,    letter-spacing: 2px),
+  'footer-social':      (family: $font-body,    size: (mobile: fn.rem(15), desktop: fn.rem(15)),   weight: 400,           line-height: 1.5,  letter-spacing: normal),
+  'copyright':          (family: $font-body,    size: (mobile: fn.rem(13), desktop: fn.rem(13)),   weight: 400,           line-height: 1.4,  letter-spacing: normal),
+);
+
+// Applies a named style from $text-styles, including its font-family —
+// unlike a single shared heading family, this spec mixes heading/body/script
+// fonts across sections, so each token owns its own family to avoid
+// call-site mistakes.
+@mixin text-style($key) {
+  @if not map.has-key($text-styles, $key) {
+    @error "Unknown text style `#{$key}`. Check $text-styles in _typography.scss.";
+  }
+
+  $style: map.get($text-styles, $key);
+  $size: map.get($style, size);
+  $mobile-size: map.get($size, mobile);
+  $desktop-size: map.get($size, desktop);
+
+  font-family: map.get($style, family);
+  font-size: $mobile-size;
+  font-weight: map.get($style, weight);
+  line-height: map.get($style, line-height);
+
+  $ls: map.get($style, letter-spacing);
+  @if $ls != normal {
+    letter-spacing: $ls;
+  }
+
+  @if $mobile-size != $desktop-size {
+    @include bs.media-breakpoint-up(xl) {
+      font-size: $desktop-size;
+    }
+  }
+}

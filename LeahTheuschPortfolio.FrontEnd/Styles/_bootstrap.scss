@@ -1,0 +1,12 @@
+// Bootstrap 5 custom build. Bootstrap's own source still uses the legacy
+// @import system, not @use — this file is intentionally the one place in
+// Styles/ that mixes with that older syntax so the rest of the project can
+// stay on @use.
+//
+// Order matters here per Bootstrap's own customization docs: functions must
+// load first (so overrides can call them), then variable overrides, then
+// Bootstrap's real variables (which use !default, so our values win), then
+// the rest of Bootstrap.
+@import 'bootstrap/scss/functions';
+@import 'variables'; // brings in $grid-breakpoints, see _variables.scss
+@import 'bootstrap/scss/bootstrap';
