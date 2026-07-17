@@ -1,0 +1,12 @@
+# Node / Vite
+node_modules/
+LeahTheuschPortfolio.Web/wwwroot/dist/
+
+# .NET build output
+bin/
+obj/
+
+# IDE / OS
+.vs/
+.vscode/
+.DS_Store
