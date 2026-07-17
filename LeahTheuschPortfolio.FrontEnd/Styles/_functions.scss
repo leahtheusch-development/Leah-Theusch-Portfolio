@@ -1,0 +1,25 @@
+@use 'sass:math';
+@use 'sass:list';
+
+@function _px-to-rem($px) {
+  @return math.div($px, 16) * 1rem;
+}
+
+// Converts px to rem for general use in property values
+@function rem($values) {
+  $result: ();
+
+  @each $value in $values {
+    @if math.unit($value) == 'px' {
+      $value: math.div($value, 1px);
+    }
+
+    @if math.is-unitless($value) {
+      $result: list.append($result, _px-to-rem($value));
+    } @else {
+      $result: list.append($result, $value);
+    }
+  }
+
+  @return $result;
+}
